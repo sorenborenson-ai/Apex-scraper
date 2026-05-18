@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        
+        apex-logo {
+            width: 100;
+            height: 100;
+            flex-direction: column;
+            align-items: center;
+
+        }
+         
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex</title>
+</head>
+    <body style ="background-color: black;">
+
+        <div><img class="apex-logo" src="apex-logo.png" alt="Apex logo"></div>
+
+        <div>
+            <input id = "input" class = "input" placeholder= "what to scrape" type="text">
+            <button onclick = "sendURL()">upload</button>
+        </div>
+
+        <div id = "result">
+
+        </div>
+
+    <script>
+        function sendURL() {
+            const URL = document.getElementById("input").value
+            fetch(`https://apex-scraper.onrender.com/scrape?url=${encodeURIComponent(URL)}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("result").textContent = html;
+            });
+        }
+
+
+    </script>
+</body>
