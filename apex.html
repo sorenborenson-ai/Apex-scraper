@@ -48,20 +48,21 @@
                 return
             }
 
-            if (parsed.protocol !== "https:" && "http:") {
-            document.getElementById("result").textContent = "URL must start with 'http' or 'Https'";
+            if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+            document.getElementById("result").textContent = "URL must start with 'http' or 'https'";
                 return
             }
 
 
 
-            document.getElementById("result").textContent = "Recieved value, fetching started"
-            fetch(`https://apex-scraper.onrender.com/scrape?url=${encodeURIComponent(URL)}`)
-            document.getElementById("result").textContent = "Fetch complete"
-            .then(response => response.text())
-            document.getElementById("result").textContent = "data getting decoded"
+            document.getElementById("result").textContent = "Recieved value, fetching started";
+            fetch(`https://apex-scraper.onrender.com/scrape?url=${encodeURIComponent(parsed)}`)
+            
+            .then(response => {document.getElementById("result").textContent = "data getting decoded";  return response.text()})
+            
             .then(html => {
-                document.getElementById("result").textContent = html;
+               document.getElementById("result").textContent = "Fetch complete";
+               document.getElementById("result").textContent = html;
             });
             
 
