@@ -42,7 +42,7 @@
             let parsed;
 
             try {
-                parsed = new URL(input);
+                parsed = new URL(input.value);
             } catch {
                 document.getElementById("result").textContent = "Not valid URL";
                 return
