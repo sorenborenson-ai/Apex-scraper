@@ -3,12 +3,16 @@
 <head>
     <style>
         
-        apex-logo {
+        .apex-logo {
             width: 100;
             height: 100;
             flex-direction: column;
             align-items: center;
 
+        }
+
+        .result {
+            color: white;
         }
          
     </style>
@@ -25,20 +29,43 @@
             <button onclick = "sendURL()">upload</button>
         </div>
 
-        <div id = "result">
+        <div id = "result" class = "result">
 
         </div>
 
     <script>
         function sendURL() {
-            const URL = document.getElementById("input").value
+
+            
+
+            // Validate
+            let parsed; 
+            
+            try {
+                parsed = new URL(input);   
+            } catch {
+                document.getElementById("result").textContent = "Not valid URL";
+                return
+            }
+
+            if (parsed.protocol !== "https:" || "http:") {
+            document.getElementById("result").textContent = "URL must start with 'http' or 'Https'";
+                return
+            }
+                
+
+
+            console.log('Received value, fetching starting')
             fetch(`https://apex-scraper.onrender.com/scrape?url=${encodeURIComponent(URL)}`)
+            console.log('Fetch complete')
             .then(response => response.text())
+            console.log('response getting decoded')
             .then(html => {
                 document.getElementById("result").textContent = html;
             });
+            console.log('done')
+        
         }
 
-
     </script>
-</body>pip install --upgrade pip
+</body>
