@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.1/beautify-html.min.js"></script>
+
     <style>
         
         .apex-logo {
@@ -11,10 +13,36 @@
 
         }
 
+
+
         .result {
             color: white;
         }
-         
+
+        .analyzing {
+            background: linear-gradient(
+                110deg,
+                #aab7c4 0%,
+                #aab7c4 40%,
+                #ffffff 50%,
+                #aab7c4 60%,
+                #aab7c4 100%
+            );
+            background-size: 250% 100%;
+            background-position: 150% center;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: 150% center; }
+            20%  { background-position: -50% center; }
+            100% { background-position: -50% center; }
+        }
+
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,9 +57,7 @@
             <button onclick = "sendURL()">upload</button>
         </div>
 
-        <div id = "result" class = "result">
-
-        </div>
+        <pre id = "result" class = "result"></pre>
 
     <script>
         function sendURL() {
@@ -53,16 +79,16 @@
                 return
             }
 
+            const resultEl = document.getElementById("result");
+            resultEl.classList.add("analyzing");
+            resultEl.textContent = "Analyzing";
 
-
-            document.getElementById("result").textContent = "Recieved value, fetching started";
             fetch(`https://apex-scraper.onrender.com/scrape?url=${encodeURIComponent(parsed)}`)
-            
-            .then(response => {document.getElementById("result").textContent = "data getting decoded";  return response.text()})
-            
+            .then(response => response.text())
             .then(html => {
-               document.getElementById("result").textContent = "Fetch complete";
-               document.getElementById("result").textContent = html;
+               const pretty = html_beautify(html, { indent_size: 2, wrap_line_length: 120 });
+               resultEl.classList.remove("analyzing");
+               resultEl.textContent = pretty;
             });
             
 
