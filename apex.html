@@ -36,13 +36,13 @@
     <script>
         function sendURL() {
 
-            
+
 
             // Validate
-            let parsed; 
-            
+            let parsed;
+
             try {
-                parsed = new URL(input);   
+                parsed = new URL(input);
             } catch {
                 document.getElementById("result").textContent = "Not valid URL";
                 return
@@ -52,19 +52,19 @@
             document.getElementById("result").textContent = "URL must start with 'http' or 'Https'";
                 return
             }
-                
 
 
-            console.log('Received value, fetching starting')
+
+            document.getElementById("result").textContent = "Recieved value, fetching started"
             fetch(`https://apex-scraper.onrender.com/scrape?url=${encodeURIComponent(URL)}`)
-            console.log('Fetch complete')
+            document.getElementById("result").textContent = "Fetch complete"
             .then(response => response.text())
-            console.log('response getting decoded')
+            document.getElementById("result").textContent = "data getting decoded"
             .then(html => {
                 document.getElementById("result").textContent = html;
             });
-            console.log('done')
-        
+            
+
         }
 
     </script>
