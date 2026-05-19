@@ -48,7 +48,7 @@
                 return
             }
 
-            if (parsed.protocol !== "https:" || "http:") {
+            if (parsed.protocol !== "https:" && "http:") {
             document.getElementById("result").textContent = "URL must start with 'http' or 'Https'";
                 return
             }
